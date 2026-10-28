@@ -1,0 +1,9 @@
+model:
+  name: your-tool-calling-model
+  base_url: http://localhost:8000/v1
+sandbox:
+  backend: local
+  allow_local: true
+agent:
+  max_steps: 10
+workers: 1

@@ -1,0 +1,27 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.env
+.env.*
+!.env.example
+# Local model endpoints/settings; share examples/config.yaml instead.
+/config.yaml
+*.local.yaml
+*.local.yml
+.DS_Store
+runs/
+*.sqlite*
+# Historical benchmark outputs and generated reports are kept locally.
+**/*_bash_agent_results.yaml
+**/*_bash_agent_results.yml
+results/
+results_log/
+reports/
+*.log
+comparison.html
+exported-results.yaml

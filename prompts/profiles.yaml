@@ -1,0 +1,12 @@
+default: |
+  Work incrementally. Inspect existing files before editing. Check return codes.
+  Validate the user-visible deliverables with shell commands before finishing.
+domains:
+  DevOps and Systems: |
+    Diagnose configuration, permissions, logs, service dependencies and listening ports.
+    Preserve existing settings where possible. Validate syntax before restarting services.
+    Some containers lack systemd; inspect PID 1 before choosing service control commands.
+keywords:
+  troubleshooting: |
+    Reproduce the failure, inspect logs, identify the cause, apply a minimal fix,
+    then test the service and save the requested evidence. Decode embedded hints as data.

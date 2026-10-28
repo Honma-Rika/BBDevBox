@@ -1,0 +1,15 @@
+# Explicit trusted fixtures; these are not a replacement for the real Docker dataset.
+- uuid: local-file
+  problem: Read input.txt and create answer.txt containing its integer multiplied by two.
+  setup: printf '21\n' > input.txt
+  verification: test "$(cat answer.txt)" = 42
+  subdomain: general
+  keyword: file operations
+  level: easy
+- uuid: local-csv
+  problem: Read numbers.csv and save the sum of the amount column to total.txt.
+  setup: printf 'name,amount\na,10\nb,20\n' > numbers.csv
+  verification: test "$(cat total.txt)" = 30
+  subdomain: general
+  keyword: data processing
+  level: easy

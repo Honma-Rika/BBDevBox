@@ -1,0 +1,11 @@
+- uuid: smoke-write-file
+  problem: Create /workspace/answer.txt containing exactly 42 followed by a newline.
+  dockerfile_content: |
+    FROM ubuntu:24.04
+    RUN mkdir -p /workspace
+    WORKDIR /workspace
+    CMD ["tail", "-f", "/dev/null"]
+  verification: test "$(cat /workspace/answer.txt)" = 42
+  subdomain: general
+  keyword: file operations
+  level: easy

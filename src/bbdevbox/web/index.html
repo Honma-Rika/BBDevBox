@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BBDevBox · Agent Observatory</title>
+<style>
+:root{color-scheme:dark;--bg:#0c1422;--panel:#141f30;--line:#26364e;--ink:#e7eef8;--muted:#98abc3;--green:#53d4af;--red:#fa879a;--gold:#eac07c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px system-ui,sans-serif}
+header{padding:28px 4vw;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+h1{font-size:23px;margin:0}h2{font-size:17px;margin:0 0 18px}small,.muted{color:var(--muted)}main{padding:25px 4vw;max-width:1700px;margin:auto}
+.layout{display:grid;grid-template-columns:310px minmax(0,1fr);gap:22px}.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px}
+button,select{background:#1e3047;color:var(--ink);border:1px solid #3a516f;border-radius:6px;padding:8px 12px;cursor:pointer}button:hover{border-color:var(--green)}
+.run{padding:14px 10px;border-top:1px solid var(--line);cursor:pointer;overflow-wrap:anywhere}.run.active{background:#203148;border-radius:6px}
+.run label{cursor:pointer}.run p{margin:6px 0}.row{display:flex;gap:12px;align-items:center;justify-content:space-between}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}
+.card{background:var(--panel);padding:20px;border:1px solid var(--line);border-radius:10px}.card strong{display:block;font-size:29px;margin-top:10px;font-variant-numeric:tabular-nums}
+.green{color:var(--green)}.red{color:var(--red)}.gold{color:var(--gold)}.progress{height:7px;background:#2b394c;border-radius:5px;overflow:hidden;margin:12px 0}.progress i{display:block;height:100%;background:var(--green)}
+.scroll{overflow:auto;max-height:460px}table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--line);white-space:nowrap}th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;position:sticky;top:0;background:var(--panel)}td:first-child{font-family:ui-monospace,monospace;font-size:12px}
+#events{font:12px/1.8 ui-monospace,monospace;max-height:300px;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+.comparison{display:grid;gap:15px}.track{height:28px;background:#26374e;border-radius:5px;margin-top:7px}.bar{background:#267f70;height:100%;min-width:48px;text-align:right;padding:4px;border-radius:5px}
+#error{color:var(--red);white-space:pre-wrap}.pill{font-size:11px;border:1px solid #40546e;border-radius:20px;padding:4px 9px}.empty{padding:35px;color:var(--muted);text-align:center}
+details{margin-top:15px}pre{white-space:pre-wrap;overflow-wrap:anywhere}@media(max-width:1000px){.layout{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+<header><div><h1>BBDevBox <span class="green">/</span> Agent Observatory</h1><small>CLI benchmark · LangGraph harness · durable telemetry</small><br><small id="storage">正在读取数据目录…</small></div><span id="connection" class="pill">Connecting</span></header>
+<main><div id="error" role="alert"></div><div class="layout"><aside class="panel"><div class="row"><h2>Evaluation runs</h2><button id="refresh">刷新</button></div><button id="follow-latest" aria-pressed="true" style="margin-bottom:10px">跟随最新运行：开启</button><br><small>点击运行可固定查看；勾选用于对比。列表每 2 秒刷新。</small><div id="runs"></div><button id="compare" style="margin-top:15px">对比所选运行</button></aside><section>
+<div class="row" style="margin-bottom:18px"><h2 id="title">选择一个运行</h2><span id="protocol" class="muted"></span></div>
+<div class="cards"><div class="card"><small>成功任务 / 全部任务</small><strong id="passed" class="green">—</strong></div><div class="card"><small>已完成尝试 / 计划尝试</small><strong id="completed">—</strong></div><div class="card"><small>输入 / 输出 tokens</small><strong id="tokens" style="font-size:22px">—</strong><small id="estimated"></small></div><div class="card"><small>运行状态 / 心跳</small><strong id="heartbeat" style="font-size:19px">—</strong></div></div>
+<div class="panel"><div class="row"><h2>任务执行</h2><small>step 包含主 agent、子 agent 和摘要模型调用</small></div><div class="progress"><i id="progress" style="width:0%"></i></div><div class="scroll"><table><thead><tr><th>Task / attempt</th><th>Domain</th><th>Status</th><th>Agent / phase</th><th>Step</th><th>Tokens</th><th>Elapsed</th></tr></thead><tbody id="attempts"></tbody></table></div></div>
+<div class="panel"><h2>事件流 <small>· 持久化游标 · 自动重连</small></h2><div id="events" aria-live="polite"></div></div>
+<div class="panel" id="comparison-panel" hidden><h2>评测对比</h2><p class="muted">共同 task / repetition 上的 macro pass@1。错误计入分母；未完成项单独报告。旧版导入的 token 只有总量，显示为估计。</p><div id="warnings" class="gold"></div><div id="comparison" class="comparison"></div><details><summary>完整指标、各领域指标与配置提示</summary><pre id="metrics"></pre></details></div>
+</section></div></main>
+<script src="/dashboard.js"></script></html>

@@ -1,0 +1,8 @@
+include README.md CONTRIBUTING.md LICENSE requirements.lock
+include test_docker.py start_parallel_bench.sh
+include data/DATASET_CARD.md
+graft docs
+graft examples
+graft prompts
+graft tests
+global-exclude __pycache__ *.py[cod]
